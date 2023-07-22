@@ -56,4 +56,25 @@ def search(request):
             })
 
 
+def new(request):
+    if request.method == "GET":
+        return render(request, "encyclopedia/new.html")
+    else:
+        title = request.POST["title"]
+        content = request.POST["content"]
+
+        if util.get_entry(title) is None:
+            util.save_entry(title, content)
+            html = convert_to_html(title)  # Use title instead of content here
+            return render(request, "encyclopedia/entry.html", {
+                "title": title,
+                "content": html
+            })
+        else:
+            return render(request, "encyclopedia/error.html", {
+                "title": title,
+                "message": f"The page for '{title}' already exists."
+            })
+
+
 
