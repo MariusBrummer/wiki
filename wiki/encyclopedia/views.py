@@ -14,8 +14,10 @@ def convert_to_html(title):
 
 
 def index(request):
+    entries = util.list_entries()
+    non_empty_entries = [entry for entry in entries if entry.strip()]  # Filter out entries with empty titles
     return render(request, "encyclopedia/index.html", {
-        "entries": util.list_entries()
+        "entries": non_empty_entries
     })
 
 
@@ -48,7 +50,7 @@ def search(request):
             for entry in all_entries:
                 if query.lower() in entry.lower():
                     matching_entries.append(entry)
-            return render(request, "encyclopedia/search.html", {
+            return render(request, "encyclopedia/search_results.html", {
                 "entries": matching_entries,
                 "query": query
             })
