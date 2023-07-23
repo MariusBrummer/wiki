@@ -10,7 +10,7 @@ def list_entries():
     """
     _, filenames = default_storage.listdir("entries")
     return list(sorted(re.sub(r"\.md$", "", filename)
-                for filename in filenames if filename.endswith(".md")))
+                       for filename in filenames if filename.endswith(".md")))
 
 
 # def save_entry(title, content):
@@ -23,8 +23,6 @@ def list_entries():
 #     if default_storage.exists(filename):
 #         default_storage.delete(filename)
 #     default_storage.save(filename, ContentFile(content))
-
-
 
 
 def save_entry(title, content):
