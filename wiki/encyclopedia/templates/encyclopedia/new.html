@@ -4,23 +4,22 @@
     New Page
 {% endblock %}
 
-{% block nav %}
 
-{% endblock %}
 
 {% block body %}
+
 <h1>New Page</h1>
 
 
 <form action="{% url 'new' %}" method="POST">
     {% csrf_token %}
     <div class="mb-3">
-        <label for="title">Title: </label>
-        <input id="title" type="text" class="form-control" name="title" placeholder="Enter a title">
+        <label>Title: </label>
+        <input type="text" class="form-control" name="title" placeholder="Enter a title">
     </div>
     <div class="mb-3">
-        <label for="content">Content: </label>
-        <textarea id="content" class="form-control" name="content" rows="5" cols="80" placeholder="Enter content"></textarea>
+        <label>Content: </label>
+        <textarea class="form-control" name="content" rows="5" cols="80" placeholder="Enter content"></textarea>
     </div>
 
     <input type="submit" class="btn btn-primary" value="Save">
