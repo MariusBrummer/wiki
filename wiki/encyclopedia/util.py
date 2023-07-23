@@ -13,6 +13,21 @@ def list_entries():
                 for filename in filenames if filename.endswith(".md")))
 
 
+# def save_entry(title, content):
+#     """
+#     Saves an encyclopedia entry, given its title and Markdown
+#     content. If an existing entry with the same title already exists,
+#     it is replaced.
+#     """
+#     filename = f"entries/{title}.md"
+#     if default_storage.exists(filename):
+#         default_storage.delete(filename)
+#     default_storage.save(filename, ContentFile(content))
+
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+
+
 def save_entry(title, content):
     """
     Saves an encyclopedia entry, given its title and Markdown
@@ -22,7 +37,11 @@ def save_entry(title, content):
     filename = f"entries/{title}.md"
     if default_storage.exists(filename):
         default_storage.delete(filename)
-    default_storage.save(filename, ContentFile(content))
+
+    # Add title as a heading in the Markdown content
+    markdown_content = f"# {title}\n\n{content}"
+
+    default_storage.save(filename, ContentFile(markdown_content))
 
 
 def get_entry(title):

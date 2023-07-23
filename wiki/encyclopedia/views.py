@@ -65,7 +65,8 @@ def new(request):
 
         if util.get_entry(title) is None:
             util.save_entry(title, content)
-            html = convert_to_html(title)  # Use title instead of content here
+            html = convert_to_html(title)
+
             return render(request, "encyclopedia/entry.html", {
                 "title": title,
                 "content": html
@@ -75,6 +76,3 @@ def new(request):
                 "title": title,
                 "message": f"The page for '{title}' already exists."
             })
-
-
-
