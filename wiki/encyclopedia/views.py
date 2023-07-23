@@ -85,3 +85,36 @@ def new(request):
                 "title": title,
                 "message": f"The page for '{title}' already exists."
             })
+
+
+def edit(request):
+    if request.method == "POST":
+        title = request.POST["edit_title"]
+        content = util.get_entry(title)
+        return render(request, "encyclopedia/edit.html", {
+            "title": title,
+            "content": content
+        })
+
+
+def save_edit(request):
+    if request.method == "POST":
+        title = request.POST["title"]
+        content = request.POST["content"]
+        util.edit_entry(title, content)
+        html = convert_to_html(title)
+        return render(request, "encyclopedia/entry.html", {
+            "title": title,
+            "content": html
+        })
+
+
+def random_page(request):
+    import random
+    entries = util.list_entries()
+    random_entry = random.choice(entries)
+    html = convert_to_html(random_entry)
+    return render(request, "encyclopedia/entry.html", {
+        "title": random_entry,
+        "content": html
+    })

@@ -8,6 +8,12 @@
 
     {{ content | safe}}
 
+    <form action="{% url 'edit' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="edit_title" value="{{ title }}">
+        <input type="submit" class="btn btn-primary" value="Edit">
+         <a href="{% url 'index' %}" class="btn btn-primary">Cancel</a>
+
 
 
 
