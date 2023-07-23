@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from markdown2 import Markdown
 
@@ -37,23 +38,31 @@ def entry(request, title):
 
 def search(request):
     if request.method == "POST":
-        query = request.POST["q"]
-        html = convert_to_html(query)
-        if html is not None:
+        entry_search = request.POST.get("q")
+        html_content = convert_to_html(entry_search)
+
+        if html_content is not None:
             return render(request, "encyclopedia/entry.html", {
-                "title": query,
-                "content": html
+                "title": entry_search,
+                "content": html_content
             })
         else:
-            all_entries = util.list_entries()
+            # partial search
             matching_entries = []
+            all_entries = util.list_entries()
             for entry in all_entries:
-                if query.lower() in entry.lower():
+                if entry_search.lower() in entry.lower():
                     matching_entries.append(entry)
-            return render(request, "encyclopedia/search_results.html", {
-                "entries": matching_entries,
-                "query": query
-            })
+            if matching_entries:
+                return render(request, "encyclopedia/search.html", {
+                    "query": entry_search,
+                    "entries": matching_entries
+                })
+            else:
+                return render(request, "encyclopedia/search.html", {
+                    "query": entry_search,
+
+                })
 
 
 def new(request):
