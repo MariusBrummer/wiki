@@ -24,8 +24,7 @@ def list_entries():
 #         default_storage.delete(filename)
 #     default_storage.save(filename, ContentFile(content))
 
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
+
 
 
 def save_entry(title, content):
